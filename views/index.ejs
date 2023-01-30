@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<meta name="author" content="Luka Cvrk (www.solucija.com)" />
+	<link rel="stylesheet" href="css/main.css" type="text/css" />
+	<script src="/imageprocessing.js"></script>
+	<title>Color Image Processing Ver 3.0</title>
+</head>
+<body onload="init()">
+	<form name="logout" action="logout" method="post"></form>
+	<div id="content">
+		<h1>Color Image Processing Ver 3.0</h1>
+		
+		<ul id="menu">
+			<li><a href="index">Home</a></li>
+			<li><a href="#" onclick="javascript:document.logout.submit();">Logout</a></li>
+			<li><a href="notice">Notice</a></li>
+		</ul>
+	
+		<div class="post">
+			<div class="details">
+				<h2><a href="#">원하는 이미지를<br>자유롭게<br>편집하세요</a></h2>
+				<p class="info"><%= user["name"] %>님의 등급은 <br> ' <%= user["grade"] %> '등급 입니다 </p>
+			
+			</div>
+			<div class="body">
+				<form action="CIP_image_server" method="post">
+					<input type="checkbox" id="mouseChecker"> 사각형 범위 변경 <br>
+					<input type="checkbox" id="freemouseChecker"> 자유형 범위 변경 <br>
+					<input type="file" id="inFile" value="이미지 열기" accept="image/*" onchange="openImage()" /><br><br>
+					<% if (user["grade"] == "bronze") { %>
+						<p> SELECT <select name="pixel" onchange="selectAlgorithm(this.form.pixel)">
+							<option value="100"> 원본 </option>
+							<option value="101"> 사진밝기조절기능 </option>
+							<option value="102"> 사진반전기능 </option>
+							<option value="103"> 사진흑백처리기능 </option>
+						</select>
+					<% } %>
+					<% if (user["grade"] == "silver") { %>
+						<p> SELECT <select name="pixel" onchange="selectAlgorithm(this.form.pixel)">
+							<option value="100"> 원본 </option>
+							<option value="101"> 사진밝기조절기능 </option>
+							<option value="102"> 사진반전기능 </option>
+							<option value="103"> 사진흑백처리기능 </option>
+							<option value="200"> 사진상하미러링기능 </option>
+							<option value="201"> 사진좌우미러링기능 </option>
+							<option value="202"> 사진회전기능 </option>
+							<option value="203"> 사진축소기능 </option>
+							<option value="204"> 사진확대기능 </option>
+						</select>
+					<% } %>
+					<% if (user["grade"] == "gold") { %>
+						<p> SELECT <select name="pixel" onchange="selectAlgorithm(this.form.pixel)">
+							<option value="100"> 원본 </option>
+							<option value="101"> 사진밝기조절기능 </option>
+							<option value="102"> 사진반전기능 </option>
+							<option value="103"> 사진흑백처리기능 </option>
+							<option value="104"> 채도변경기능 </option>
+							<option value="105"> 원하는색상추출기능 </option>
+							<option value="200"> 사진상하미러링기능 </option>
+							<option value="201"> 사진좌우미러링기능 </option>
+							<option value="202"> 사진회전기능 </option>
+							<option value="203"> 사진축소기능 </option>
+							<option value="204"> 사진확대기능 </option>
+							<option value="300"> 히스토그램스트레칭기능 </option>
+							<option value="301"> 앤드인기능 </option>
+							<option value="302"> 파라볼라캡기능 </option>
+							<option value="303"> 히스토그램평균기능 </option>
+							<option value="400"> 엠보싱기능 </option>
+							<option value="401"> 블러링기능 </option>
+							<option value="402"> 샤프닝기능 </option>
+							<option value="403"> 가우시안필터링기능 </option>
+						</select>
+					<% } %>
+					<input type="color" id="areaColorValue" value="#FFFFFF"/>
+				</form>
+				<canvas id="inCanvas" style="background-color:rgb(255, 255, 255)"></canvas>
+				<a id="download" download="download.jpg" target="_blank"><canvas id="outCanvas" style="background-color:rgb(255, 255, 255)"></canvas></a>
+			</div>
+			<div class="x"></div>
+		</div>
+		
+		<div class="col">
+			<h3><a href="#">BRONZE</a></h3>
+			<p>'Bronze' 등급은 <br>'사진밝기조절기능', '사진반전기능',<br>'사진흑백처리기능' 들을 이용 할 수 있습니다.</p>
+		</div>
+		<div class="col">
+			<h3><a href="#">SILVER</a></h3>
+			<p>'Silver' 등급은<br>'사진밝기조절기능', '사진반전기능',<br>'사진흑백처리기능',<br>'사진상하미러링기능', '사진좌우미러링기능',<br>'사진회전기능', '사진축소기능', '사진확대기능'<br>들을 이용 할 수 있습니다.</p>
+		</div>
+		<div class="col last">
+			<h3><a href="#">GOLD</a></h3>
+			<p>'Gold' 등급은<br>'사진밝기조절기능', '사진반전기능',<br>'사진흑백처리기능',<br>'사진상하미러링기능', '사진좌우미러링기능',<br>'사진회전기능', '사진축소기능', '사진확대기능'<br>'히스토그램스트레칭기능', '앤드인기능',<br>'파라볼라캡기능', '히스토그램평균기능', '엠보싱기능',<br>'블러링기능', '샤프닝기능', '가우시안필터링기능'<br>'채도변경기능', '원하는색상추출기능' 들을 이용 할 수 있습니다.</p>
+		</div>
+		
+		<div id="footer">
+			<p>Copyright &copy; <em>Color Image Processing Ver 3.0</em> &middot; Design: SSH, <a href="https://rimzi-313.tistory.com/" title="Blog">Blog</a></p>
+		</div>	
+	</div>
+</body>
+</html>

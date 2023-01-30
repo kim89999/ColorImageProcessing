@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<meta name="author" content="Luka Cvrk (www.solucija.com)" />
+	<link rel="stylesheet" href="css/notice.css" type="text/css" />
+	<title>Color Image Processing Ver 3.0</title>
+</head>
+<body>
+	<form name="logout" action="logout" method="post"></form>
+	
+	<div id="content">
+		<h1>Color Image Processing Ver 3.0</h1>
+		
+		<ul id="menu">
+			<li><a href="index">Home</a></li>
+			<li><a href="#" onclick="javascript:document.logout.submit();">Logout</a></li>
+			<li><a href="notice">Notice</a></li>
+		</ul>
+	
+		<div class="post">
+			<div class="details">
+				<h2>공지사항</h2>
+			</div>
+			<div class="body">
+			</div>
+			<div class="x"></div>
+		</div>
+		
+		<div class="col">
+			<table class="board">
+				<tr>
+				  <th>Title</th>
+				  <th>Name</th>
+				  <th>Date</th>
+				</tr>
+				<% for (var i = 0; i < docs.length; i++) { %>
+					   <tr>
+						  <td><a href="/notice/<%= docs[i]._id %>"><%= docs[i].title %></a></td>
+						  <td><%= docs[i].name %></td>
+						  <td><%= docs[i].date %></td>
+					   </tr>
+				<% } %>
+			</table>
+			<% if (_id == "62a5df11df8175495ee97cbd") { %>
+				<center>
+					<form method="post" action="/notice_add"><input type="submit" value="공지사항 작성"></form>
+				</center>
+			<% } %>
+		</div>
+		
+		<div id="footer">
+			<p>Copyright &copy; <em>Color Image Processing Ver 3.0</em> &middot; Design: SSH, <a href="https://rimzi-313.tistory.com/" title="Blog">Blog</a></p>
+		</div>	
+	</div>
+</body>
+</html>
